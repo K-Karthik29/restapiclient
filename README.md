@@ -20,10 +20,10 @@ This Java application fetches real-time weather data from a public REST API (Ope
 
 ---
 
-## 📌 Features
+##  Features
 
-- 🔗 Connects to [OpenWeatherMap API](https://openweathermap.org/api)
-- 🌍 Allows user input to get weather by city name
-- 📡 Sends HTTP GET requests using `HttpURLConnection`
-- 🧾 Parses JSON using `org.json`
-- 🖥️ Displays temperature, weather condition, and humidity ,air speed in a city
+-  Connects to [OpenWeatherMap API]
+-  Allows user input to get weather by city name
+-  Sends HTTP GET requests using `HttpURLConnection`
+-  Parses JSON using `org.json`
+-  Displays temperature, weather condition, and humidity ,air speed in a city
