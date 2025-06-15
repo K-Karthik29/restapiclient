@@ -12,7 +12,7 @@ mentor:neela santosh
 
 out put:
 
-
+![Image](https://github.com/user-attachments/assets/6d30c5a5-6c25-4772-8876-57accc84c0a6
 
 # 🌤️ Java Weather REST API Client
 
