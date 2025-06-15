@@ -1,0 +1,64 @@
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import org.json.JSONObject;
+
+/**
+ * A simple Java application that consumes a public REST API
+ * (here, fetching weather data from Open-Meteo API) and displays
+ * the data in a structured format.
+ */
+public class RestApiClient {
+    // Example: Open-Meteo's public weather API (no API key required)
+    private static final String API_URL = "https://api.open-meteo.com/v1/forecast?latitude=28.61&longitude=77.23&current_weather=true";
+
+    public static void main(String[] args) {
+        try {
+            String response = sendGET(API_URL);
+            parseAndDisplayWeather(response);
+        } catch (Exception e) {
+            System.out.println("Error fetching or parsing data: " + e.getMessage());
+        }
+    }
+
+    // Method to send HTTP GET request and get response as a String
+    private static String sendGET(String urlStr) throws Exception {
+        URL url = new URL(urlStr);
+        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+        con.setRequestMethod("GET");
+
+        int status = con.getResponseCode();
+        if (status != 200) {
+            throw new RuntimeException("HTTP GET Request Failed with Error code : " + status);
+        }
+
+        BufferedReader in = new BufferedReader(new InputStreamReader(con.getInputStream()));
+        String inputLine;
+        StringBuilder content = new StringBuilder();
+        while((inputLine = in.readLine()) != null) {
+            content.append(inputLine);
+        }
+        in.close();
+        con.disconnect();
+        return content.toString();
+    }
+
+    // Method to parse JSON and display weather info
+    private static void parseAndDisplayWeather(String jsonStr) {
+        JSONObject obj = new JSONObject(jsonStr);
+        JSONObject currentWeather = obj.getJSONObject("current_weather");
+
+        double temperature = currentWeather.getDouble("temperature");
+        double windspeed = currentWeather.getDouble("windspeed");
+        double winddirection = currentWeather.getDouble("winddirection");
+        String time = currentWeather.getString("time");
+
+        System.out.println("Current Weather (Delhi, India):");
+        System.out.println("-------------------------------");
+        System.out.println("Time         : " + time);
+        System.out.println("Temperature  : " + temperature + " °C");
+        System.out.println("Windspeed    : " + windspeed + " km/h");
+        System.out.println("Wind Dir     : " + winddirection + "°");
+    }
+}
